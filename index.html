@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <title>便利商店 — 超商經營原型</title>
+    <meta name="description" content="2/3 視角的台灣超商經營遊戲原型。結帳、補貨、撈關東煮、煮大冰美 —— 店裡只有你一個人。" />
+    <meta name="theme-color" content="#14181c" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="便利商店 — 超商經營原型" />
+    <meta property="og:description" content="2/3 視角的台灣超商經營遊戲原型。結帳、補貨、撈關東煮、煮大冰美 —— 店裡只有你一個人。" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%8F%AA%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap"
+    />
+
+    <style>
+      :root { color-scheme: dark; }
+      html, body { margin: 0; height: 100%; background: #14181c; overflow: hidden; }
+      body {
+        display: grid;
+        place-items: center;
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+        font-family: "Noto Sans TC", system-ui, -apple-system, sans-serif;
+        color: #cfd8e0;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right)
+                 env(safe-area-inset-bottom) env(safe-area-inset-left);
+      }
+      canvas { image-rendering: pixelated; display: block; }
+
+      /* 載入中的過場，讓第一眼不是一片黑 */
+      #boot {
+        position: fixed; inset: 0; display: grid; place-items: center;
+        background: #14181c; z-index: 10; transition: opacity .35s ease;
+      }
+      #boot.gone { opacity: 0; pointer-events: none; }
+      #boot .inner { text-align: center; }
+      #boot .mark { font-size: 34px; line-height: 1; }
+      #boot .name { margin-top: 12px; font-size: 15px; letter-spacing: .3em; color: #8fa0ad; }
+
+      /* 直式手機畫面太窄，提示轉橫向 */
+      #rotate { display: none; text-align: center; padding: 28px; font-size: 15px; line-height: 1.8; }
+      #rotate small { display: block; margin-top: 8px; color: #8fa0ad; font-size: 13px; }
+      @media (max-width: 820px) and (orientation: portrait) {
+        #game { display: none; }
+        #rotate { display: block; }
+        #boot { display: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #boot { transition: none; }
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-CSZri-7C.js"></script>
+  </head>
+  <body>
+    <div id="game"></div>
+    <div id="rotate">
+      請把手機轉成橫向再玩 📱↻
+      <small>轉橫向之後，左右兩側的黑邊會變成搖桿與 Ⓔ 鍵，手指不會擋到店裡</small>
+    </div>
+
+    <div id="boot"><div class="inner"><div class="mark">🏪</div><div class="name">便利商店</div></div></div>
+
+    <script>
+      // 畫面第一次畫出來之後才把過場收掉
+      addEventListener('load', function () {
+        setTimeout(function () {
+          var boot = document.getElementById('boot');
+          if (boot) boot.classList.add('gone');
+        }, 450);
+      });
+    </script>
+  </body>
+</html>
