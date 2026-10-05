@@ -1,0 +1,15 @@
+# Cloudflare Pages 的快取規則（GitHub Pages 不讀這個檔）。
+#
+# assets/ 的檔名帶雜湊值（index-XXXX.js），內容一變檔名就變 —— 可以永久快取。
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 音檔檔名不帶雜湊：快取一天，過期後先用舊的、背景再確認有沒有新版。
+/audio/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# 首頁每次都要問一下伺服器，玩家才拿得到新版（新版會指向新的 assets 檔名）。
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
